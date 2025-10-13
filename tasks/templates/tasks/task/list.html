@@ -1,7 +1,7 @@
 {% block content %}
 
 
-{% include "header.html" %}
+{% include "header.html" with subtitle="Todas las tareas"%}
 
 {% for task in tasks %}
 
@@ -12,6 +12,15 @@
   <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
 </p>
 
+
+
+
+
+
 {% endfor %}
+
+
+<a href="{% url 'tasks:task-list-pending' %}">Tareas pendientes</a>
+
 {% endblock %}
 
