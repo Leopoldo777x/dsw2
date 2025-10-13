@@ -1,0 +1,17 @@
+{% block content%}
+
+{% include "header.html" %}
+
+<ul>
+  {% for task in tasks %}
+  <li>{{task.name}}</li>
+  {% endfor %}
+
+
+
+
+</ul>
+
+
+
+{% endblock %}

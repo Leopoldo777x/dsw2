@@ -1,0 +1,13 @@
+{% block content %}
+
+{% include "header.html" %}
+<p>{{ task.name }}</p>
+<p>{% if task.completed %}
+  Completada
+  {% else %}
+  Pendiente
+  {% endif %}</p>
+<p>{{ task.description }}</p>
+<a href="{% url 'tasks:task-list' %}">Volver</a>
+
+{% endblock %}
