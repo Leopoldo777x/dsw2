@@ -1,0 +1,17 @@
+{% block content %}
+
+
+{% include "header.html" %}
+
+{% for task in tasks %}
+
+<p>{{ task.name }} 
+  {% if task.completed %} ✅ 
+  {% else %} ❌ 
+  {% endif %}
+  <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
+</p>
+
+{% endfor %}
+{% endblock %}
+
