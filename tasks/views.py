@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render  # , redirect
 
-# Create your views here.
+# from django.http import HttpResponse
+# from django,utils.text import slugify
+from .models import Task
+
+
+def task_list(request):
+    tasks = Task.objects.all()
+
+    return render(request, 'tasks/task/list.html', {'tasks': tasks})
