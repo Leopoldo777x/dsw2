@@ -26,8 +26,8 @@ def task_list_pending(request):
     return render(request, 'tasks/task/list_pending.html', {'tasks': tasks})
 
 
-def edit_task(request, task_id: int):
-    task = Task.objects.get(pk=task_id)
+def edit_task(request, task_slug: str):
+    task = Task.objects.get(slug=task_slug)
     if request.method == 'POST':
         if (form := EditPostForm(request.POST, instance=task)).is_valid():
             task = form.save(commit=False)
@@ -38,6 +38,10 @@ def edit_task(request, task_id: int):
     return render(request, 'tasks/task/edit.html', dict(task=task, form=form))
 
 
-def delete_task(request, task_id: int):
-    Task.objects.get(pk=task_id).delete()
-    return render(request, 'tasks/task/list.html')
+def delete_task(request, task_slug: str):
+    Task.objects.get(slug=task_slug).delete()
+    return task_list(request)
+
+
+def add_task(request, task_slug: str):
+        
