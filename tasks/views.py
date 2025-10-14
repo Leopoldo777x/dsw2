@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render  # , redirect
+from django.utils.text import slugify
 
-# from django,utils.text import slugify
+from .forms import EditPostForm
 from .models import Task
 
 
@@ -23,3 +24,15 @@ def task_list_pending(request):
     tasks = Task.objects.filter(completed=False)
 
     return render(request, 'tasks/task/list_pending.html', {'tasks': tasks})
+
+
+def task_edit(request, task_slug):
+    task = Task.objects.get(slug=task_slug)
+    if request.method == 'POST':
+        if (form := EditPostForm(request.POST, instance=task)).is_valid():
+            task = form.save(commit=False)
+            task.slug = slugify(task.title)
+            task.save()
+    else:
+        form = EditPostForm(instance=task)
+    return render(request, 'tasks/task/edit.html', dict(task=task, form=form))

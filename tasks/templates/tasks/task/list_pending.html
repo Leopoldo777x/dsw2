@@ -4,9 +4,14 @@
 
 <ul>
   {% for task in tasks %}
-  <li>{{task.name}}</li>
+  <li>{{task.name}}
+  {% if task.completed %} ✅ 
+  {% else %} ❌ 
+  {% endif %}
+  <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
+  <a href="{% url 'tasks:task-detail' task.slug %}"> Cambiar estado</a> {% comment %} Falta cambiar el estado {% endcomment %}
+</li>
   {% endfor %}
-
 
 
 
