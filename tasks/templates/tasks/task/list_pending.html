@@ -10,6 +10,7 @@
   {% endif %}
   <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
   <a href="{% url 'tasks:task-detail' task.slug %}"> Cambiar estado</a> {% comment %} Falta cambiar el estado {% endcomment %}
+  <a href="{% url 'tasks:edit-task' task.id %}">Editar tarea</a>
 </li>
   {% endfor %}
 
