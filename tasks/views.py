@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render  # , redirect
+from django.shortcuts import redirect, render
 from django.utils.text import slugify
 
-from .forms import EditPostForm
+from .forms import AddTaskForm, EditTaskForm
 from .models import Task
 
 
@@ -29,12 +29,12 @@ def task_list_pending(request):
 def edit_task(request, task_slug: str):
     task = Task.objects.get(slug=task_slug)
     if request.method == 'POST':
-        if (form := EditPostForm(request.POST, instance=task)).is_valid():
+        if (form := EditTaskForm(request.POST, instance=task)).is_valid():
             task = form.save(commit=False)
             task.slug = slugify(task.name)
             task.save()
     else:
-        form = EditPostForm(instance=task)
+        form = EditTaskForm(instance=task)
     return render(request, 'tasks/task/edit.html', dict(task=task, form=form))
 
 
@@ -45,11 +45,11 @@ def delete_task(request, task_slug: str):
 
 def add_task(request):
     if request.method == 'POST':
-        if (form := AddPostForm(request.POST)).is_valid():  # Crea objeto Addpostform
+        if (form := AddTaskForm(request.POST)).is_valid():  # Crea objeto Addpostform
             post = form.save(commit=False)
             post.slug = slugify(post.title)  # slugifea el titulo
             post.save()  # Guarda en baase de datos
             return redirect('posts:post-list')  # TE lleva a posts/list
     else:
-        form = AddPostForm()
+        form = AddTaskForm()
     return render(request, 'posts/post/add.html', dict(form=form))
