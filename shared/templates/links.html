@@ -1,0 +1,6 @@
+<div class="links">
+    <a href="{% url 'tasks:task-list' %}">Todas las tareas</a>
+    {% comment %} <a href="{% url 'tasks:task-list-completed' %}">Tareas completadas</a> {% endcomment %}
+    <a href="{% url 'tasks:task-list-pending' %}">Tareas pendientes</a>
+    <a href="{% url 'tasks:add-task' %}">Añadir tarea</a>
+</div>

@@ -23,7 +23,13 @@ def task_detail(request, task_slug: str):
 def task_list_pending(request):
     tasks = Task.objects.filter(completed=False)
 
-    return render(request, 'tasks/task/list_pending.html', {'tasks': tasks})
+    return render(request, 'tasks/task/specific_list.html', {'tasks': tasks})
+
+
+def task_list_completed(request):
+    tasks = Task.objects.filter(completed=True)
+
+    return render(request, 'tasks/task/specific_list.html', {'tasks': tasks})
 
 
 def edit_task(request, task_slug: str):
@@ -45,11 +51,11 @@ def delete_task(request, task_slug: str):
 
 def add_task(request):
     if request.method == 'POST':
-        if (form := AddTaskForm(request.POST)).is_valid():  # Crea objeto Addpostform
-            post = form.save(commit=False)
-            post.slug = slugify(post.title)  # slugifea el titulo
-            post.save()  # Guarda en baase de datos
-            return redirect('posts:post-list')  # TE lleva a posts/list
+        if (form := AddTaskForm(request.POST)).is_valid():  # Crea objeto AddTaskform
+            task = form.save(commit=False)
+            task.slug = slugify(task.name)  # slugifea el titulo
+            task.save()  # Guarda en baase de datos
+            return redirect('tasks:task-list')  # TE lleva a task/tasks/list
     else:
         form = AddTaskForm()
-    return render(request, 'posts/post/add.html', dict(form=form))
+    return render(request, 'tasks/task/add.html', dict(form=form))
