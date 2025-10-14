@@ -43,5 +43,13 @@ def delete_task(request, task_slug: str):
     return task_list(request)
 
 
-def add_task(request, task_slug: str):
-        
+def add_task(request):
+    if request.method == 'POST':
+        if (form := AddPostForm(request.POST)).is_valid():  # Crea objeto Addpostform
+            post = form.save(commit=False)
+            post.slug = slugify(post.title)  # slugifea el titulo
+            post.save()  # Guarda en baase de datos
+            return redirect('posts:post-list')  # TE lleva a posts/list
+    else:
+        form = AddPostForm()
+    return render(request, 'posts/post/add.html', dict(form=form))
