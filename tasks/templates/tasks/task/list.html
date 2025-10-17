@@ -10,15 +10,13 @@
   {% else %} ❌ 
   {% endif %}
   <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
+  <a href="{% url 'tasks:toggle-task' task.slug %}"> Cambiar estado</a>
+
 </p>
 
-
-
-
-
-
+  {% empty %}
+  <p>Nada que hacer. ¡Enhorabuena!</p>
 {% endfor %}
-
 
 {% include "links.html" %}
 

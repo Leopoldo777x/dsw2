@@ -59,3 +59,10 @@ def add_task(request):
     else:
         form = AddTaskForm()
     return render(request, 'tasks/task/add.html', dict(form=form))
+
+
+def toggle_task(request, task_slug):
+    task = Task.objects.get(slug=task_slug)
+    task.completed = not task.completed
+    task.save()
+    return task_list(request)

@@ -1,6 +1,6 @@
-<h1>Editando task "{{ task.name }}"</h1>
+{% include "header.html" with subtitle=Editando task "{{ task.name }}"%}
 
-<form method="task" novalidate>
+<form method="post" novalidate>
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Guardar">
