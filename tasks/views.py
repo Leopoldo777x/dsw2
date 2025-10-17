@@ -39,7 +39,7 @@ def edit_task(request, task_slug: str):
             task = form.save(commit=False)
             task.slug = slugify(task.name)
             task.save()
-            return redirect('tasks:task-detail')
+            return redirect('tasks:task-detail', task_slug=task.slug)
     else:
         form = EditTaskForm(instance=task)
     return render(request, 'tasks/task/edit.html', dict(task=task, form=form))
