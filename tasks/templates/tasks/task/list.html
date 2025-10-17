@@ -11,7 +11,8 @@
   {% endif %}
   <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
   <a href="{% url 'tasks:toggle-task' task.slug %}"> Cambiar estado</a>
-
+  <a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a>
+  <a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a>
 </p>
 
   {% empty %}

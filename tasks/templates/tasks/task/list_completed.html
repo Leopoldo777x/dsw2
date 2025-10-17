@@ -1,0 +1,23 @@
+{% block content%}
+
+{% include "header.html" with subtitle="Tareas completadas" %}
+
+<ul>
+  {% for task in tasks %}
+  <li>{{task.name}}
+    {% if task.completed %} ✅ 
+    {% else %} ❌ 
+    {% endif %}
+    <a href="{% url 'tasks:task-detail' task.slug %}"> Más información</a>
+    <a href="{% url 'tasks:toggle-task' task.slug %}"> Cambiar estado</a>
+    <a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a>
+    <a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a>
+  </li>
+    {% empty %}
+  <p>Nada que hacer. ¡Enhorabuena!</p>
+  {% endfor %}
+</ul>
+
+{% include "links.html" %}
+
+{% endblock %}

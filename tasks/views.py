@@ -23,13 +23,13 @@ def task_detail(request, task_slug: str):
 def task_list_pending(request):
     tasks = Task.objects.filter(completed=False)
 
-    return render(request, 'tasks/task/specific_list.html', {'tasks': tasks})
+    return render(request, 'tasks/task/list_pending.html', {'tasks': tasks})
 
 
 def task_list_completed(request):
     tasks = Task.objects.filter(completed=True)
 
-    return render(request, 'tasks/task/specific_list.html', {'tasks': tasks})
+    return render(request, 'tasks/task/list_completed.html', {'tasks': tasks})
 
 
 def edit_task(request, task_slug: str):
@@ -39,6 +39,7 @@ def edit_task(request, task_slug: str):
             task = form.save(commit=False)
             task.slug = slugify(task.name)
             task.save()
+            return redirect('tasks:task-detail')
     else:
         form = EditTaskForm(instance=task)
     return render(request, 'tasks/task/edit.html', dict(task=task, form=form))
@@ -46,7 +47,7 @@ def edit_task(request, task_slug: str):
 
 def delete_task(request, task_slug: str):
     Task.objects.get(slug=task_slug).delete()
-    return task_list(request)
+    return redirect('tasks:task-list')
 
 
 def add_task(request):
@@ -65,4 +66,4 @@ def toggle_task(request, task_slug):
     task = Task.objects.get(slug=task_slug)
     task.completed = not task.completed
     task.save()
-    return task_list(request)
+    return redirect('tasks:task-list')

@@ -1,7 +1,9 @@
-{% include "header.html" with subtitle=Editando task "{{ task.name }}"%}
+{% include "header.html" with subtitle="Editar tarea"%}
 
 <form method="post" novalidate>
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Guardar">
 </form>
+
+<a href="{% url 'tasks:task-list' %}">Cancelar</a>
